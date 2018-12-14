@@ -230,7 +230,16 @@ VcdTraceFile::initialize()
     time_t long_time;
     time(&long_time);
     struct tm *p_tm = localtime(&long_time);
+
+// Ensuring backwards compatibility with GCC < 5
+#if __GNUC__ >= 5
     stream() << std::put_time(p_tm, "     %b %d, %Y       %H:%M:%S\n");
+#else
+    char mltime[128];
+    strftime(mltime, sizeof(mltime), "     %b %d, %Y       %H:%M:%S\n", p_tm);
+    stream() << mltime;
+#endif
+
     stream() << "$end" << std::endl << std::endl;
 
     // Version.
