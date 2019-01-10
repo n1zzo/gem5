@@ -19,7 +19,8 @@ perlbench.executable =  'perlbench' + arm_suffix
 #perlbench.cmd = [perlbench.executable] + ['-I.', '-I./lib', 'attrs.pl']
 # REF CMDS
 perlbench.cmd = [perlbench.executable] + ['-I./lib', 'checkspam.pl', '2500',
-                                    '5', '25', '11', '150', '1', '1', '1', '1']
+                                          '5', '25', '11', '150', '1', '1',
+                                          '1', '1']
 #perlbench.cmd = [perlbench.executable] + ['-I./lib', 'diffmail.pl', '4',
 #                                          '800', '10', '17', '19', '300']
 #perlbench.cmd = [perlbench.executable] + ['-I./lib', 'splitmail.pl', '1600',
@@ -146,7 +147,7 @@ namd = Process() # Update June 7, 2017: This used to be LiveProcess()
 namd.executable = 'namd' + arm_suffix
 # TEST CMDS
 #namd.cmd = [namd.executable] + ['--input', 'namd.input', '--output',
-                                 'namd.out', '--iterations', '1']
+#                                'namd.out', '--iterations', '1']
 # REF CMDS
 namd.cmd = [namd.executable] + ['--input', 'namd.input', '--output',
                                 'namd.out', '--iterations', '38']
@@ -215,11 +216,11 @@ hmmer = Process() # Update June 7, 2017: This used to be LiveProcess()
 hmmer.executable = 'hmmer' + arm_suffix
 # TEST CMDS
 #hmmer.cmd = [hmmer.executable] + ['--fixed', '0', '--mean', '325', '--num',
-                         '45000', '--sd', '200', '--seed', '0', 'bombesin.hmm']
+#                        '45000', '--sd', '200', '--seed', '0', 'bombesin.hmm']
 # REF CMDS
 hmmer.cmd = [hmmer.executable] + ['nph3.hmm', 'swiss41']
 #hmmer.cmd = [hmmer.executable] + ['--fixed', '0', '--mean', '500', '--num',
-                           '500000', '--sd', '350', '--seed', '0', 'retro.hmm']
+#                          '500000', '--sd', '350', '--seed', '0', 'retro.hmm']
 #hmmer.output = out_dir + 'hmmer.out'
 
 #458.sjeng
