@@ -332,44 +332,16 @@ if CpuConfig.is_kvm_cpu(CPUClass) or CpuConfig.is_kvm_cpu(FutureClass):
     else:
         fatal("KvmCPU can only be used in SE mode with x86")
 
-# Sanity check
-# if options.fastmem:
-#     if CPUClass != AtomicSimpleCPU:
-#         fatal("Fastmem can only be used with atomic CPU!")
-#     if (options.caches or options.l2cache):
-#         fatal("You cannot use fastmem in combination with caches!")
-
 if options.simpoint_profile:
-    if not options.fastmem:
-        # Atomic CPU checked with fastmem option already
-        fatal("SimPoint generation should be done with atomic cpu and fastmem")
+    if CPUClass != NonCachingSimpleCPU:
+        fatal("SimPoint generation should be done with non caching cpu")
     if np > 1:
         fatal("SimPoint generation not supported with more than one CPUs")
 
-# for i in xrange(np):
-#     if options.smt:
-#         system.cpu[i].workload = multiprocesses
-#     elif len(multiprocesses) == 1:
-#         system.cpu[i].workload = multiprocesses[0]
-#     else:
-#         system.cpu[i].workload = multiprocesses[i]
-#
-#     if options.fastmem:
-#         system.cpu[i].fastmem = True
-#
-#     if options.simpoint_profile:
-#         system.cpu[i].addSimPointProbe(options.simpoint_interval)
-#
-#     if options.checker:
-#         system.cpu[i].addCheckerCpu()
-#
-#     system.cpu[i].createThreads()
-
+system.cpu[0].workload = process
+if options.simpoint_profile:
+    system.cpu[0].addSimPointProbe(options.simpoint_interval)
 system.cpu[0].createThreads()
-
-for i in xrange(np):
-    system.cpu[i].workload = process
-    print(process.cmd)
 
 if options.ruby:
     if options.cpu_type == "atomic" or options.cpu_type == "AtomicSimpleCPU":
